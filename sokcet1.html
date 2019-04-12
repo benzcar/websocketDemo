@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>websocket</title>
+</head>
+<body>
+	<input type="text" id="sendtext">
+	<button id="sendBtn">发送</button>
+	<div id="res"></div>
+	<script>
+		// 创建 websocket 服务
+		// ws：//echo.websocket.org/   ws : 请求方式   //echo.websocket.org/： 请求地址
+		var websocket = new WebSocket("ws://echo.websocket.org/");
+		// websocket 启动时的回调
+		websocket.onopen = function () {
+			console.log('websocket 开启');
+			document.getElementById('res').innerHTML = 'CONNECTED';
+		}
+		// websocket 关闭时的回调
+		websocket.onclose = function () {
+			console.log('WebSocket 关闭');
+		}
+		// websocket 接收信息
+		websocket.onmessage = function (e) {
+			console.log(e.data);
+			document.getElementById('res').innerHTML = e.data;
+		}
+		document.getElementById('sendBtn').onclick = function () {
+			var text = document.getElementById('sendtext').value;
+			// websocket 发送信息
+			websocket.send(text);
+		}
+	</script>
+</body>
+</html>
